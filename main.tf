@@ -83,7 +83,7 @@ resource "aws_internet_gateway" "internet_gateway" {
 
 # We create a route table with target as our internet gateway and destination as "internet"
 # Set of rules used to determine where network traffic is directed
-resource "aws_route_table" "IG_route_table" {
+resource "aws_route_table" "IG_route_table1" {
    depends_on = [
       aws_vpc.vpc,
       aws_internet_gateway.internet_gateway,
@@ -94,7 +94,22 @@ resource "aws_route_table" "IG_route_table" {
       gateway_id = aws_internet_gateway.internet_gateway.id
    }
    tags = {
-      Name = "IG-route-table"
+      Name = "IG-route-table1"
+   }
+}
+
+resource "aws_route_table" "IG_route_table2" {
+   depends_on = [
+      aws_vpc.vpc,
+      aws_internet_gateway.internet_gateway,
+   ]
+   vpc_id = aws_vpc.vpc.id
+   route {
+      cidr_block = "0.0.0.0/0"
+      gateway_id = aws_internet_gateway.internet_gateway.id
+   }
+   tags = {
+      Name = "IG-route-table2"
    }
 }
 
